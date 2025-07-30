@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de votre création de micro-entreprise - Pierre Durand</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1e293b;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: white;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem;
+            border-bottom: 1px solid #e2e8f0;
+            position: relative;
+        }
+
+        .welcome-title {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .welcome-subtitle {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .status-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #fef3c7;
+            color: #92400e;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-banner.validated {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-banner.pending {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .estimated-date {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .progress-section {
+            padding: 2rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .progress-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-bar-container {
+            margin-bottom: 2rem;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+            border-radius: 6px;
+            transition: width 1s ease;
+            width: 71%;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            transition: all 0.3s;
+            border: 1px solid #f1f5f9;
+        }
+
+        .step:hover {
+            background: #fafbfc;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .step-completed {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .step-current {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            animation: pulse 2s infinite;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+
+        .step-pending {
+            background: #d1d5db;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+            font-size: 1.125rem;
+        }
+
+        .step-description {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .step-date {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .step-action {
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .documents-section {
+            padding: 2rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .document-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .document-card {
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .document-card:hover {
+            border-color: #667eea;
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .document-card.uploaded {
+            border-style: solid;
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .document-card.missing {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .document-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .document-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .document-status {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .document-status.success {
+            color: #166534;
+            font-weight: 500;
+        }
+
+        .document-status.error {
+            color: #dc2626;
+            font-weight: 500;
+        }
+
+        .upload-area {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 1px dashed #d1d5db;
+            border-radius: 8px;
+            background: #fafbfc;
+        }
+
+        .messaging-section {
+            padding: 2rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .message-thread {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #fafbfc;
+        }
+
+        .message {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .message:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .message-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            flex-shrink: 0;
+            font-size: 0.875rem;
+        }
+
+        .message-avatar.system {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-author {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .message-text {
+            font-size: 0.875rem;
+            color: #4b5563;
+            line-height: 1.6;
+        }
+
+        .message-input-container {
+            position: relative;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .faq-section {
+            padding: 2rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .faq-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            background: #f8fafc;
+            cursor: pointer;
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .faq-question:hover {
+            background: #f1f5f9;
+        }
+
+        .faq-question.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .faq-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            transition: transform 0.2s;
+        }
+
+        .faq-question.active .faq-icon {
+            background: white;
+            color: #667eea;
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 1.25rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+            display: none;
+            line-height: 1.6;
+            background: white;
+        }
+
+        .faq-answer.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .download-section {
+            padding: 2rem;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .download-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .download-card:hover {
+            background: #f1f5f9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-card.available {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .download-card.pending {
+            opacity: 0.6;
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+        }
+
+        .download-status {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+        }
+
+        .download-status.available {
+            color: #166534;
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .footer-content {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+        }
+
+        .trusted-logos {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .trusted-logo {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.875rem;
+        }
+
+        .urgent-contact {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: #ef4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 1000;
+        }
+
+        .urgent-contact:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .document-grid, .download-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .welcome-section {
+                padding: 1.5rem;
+            }
+            
+            .progress-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        
+
+        <!-- Carte principale -->
+        <div class="main-card">
+            <!-- Section d'accueil -->
+            <div class="welcome-section">
+                <h1 class="welcome-title">Bonjour Pierre ! 👋</h1>
+                <p class="welcome-subtitle">Voici l'état d'avancement de votre création de micro-entreprise</p>
+                
+                <div class="status-banner">
+                    <span>⏳</span>
+                    <span>Dossier en cours de traitement par l'URSSAF</span>
+                </div>
+                
+                <div class="estimated-date">
+                    <strong>📅 Finalisation estimée:</strong> 2-3 jours ouvrés (avant le 26/07/2025)
+                </div>
+            </div>
+
+            <!-- Section progression -->
+            <div class="progress-section">
+                <h2 class="progress-title">
+                    <span>📊</span>
+                    Progression de votre dossier
+                </h2>
+                
+                <div class="progress-bar-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span><strong>Étape 5 sur 7</strong> (71% terminé)</span>
+                        <span>🎯 Presque fini !</span>
+                    </div>
+                </div>
+
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-icon step-completed">✓</div>
+                        <div class="step-content">
+                            <div class="step-title">📥 Formulaire rempli</div>
+                            <div class="step-description">Vos informations personnelles et d'activité ont été enregistrées avec succès</div>
+                            <div class="step-date">✅ Complété le 22/07/2025 à 14:30</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon step-completed">✓</div>
+                        <div class="step-content">
+                            <div class="step-title">📎 Pièces justificatives reçues</div>
+                            <div class="step-description">Pièce d'identité et justificatif de domicile validés par notre équipe</div>
+                            <div class="step-date">✅ Complété le 22/07/2025 à 15:45</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon step-completed">✓</div>
+                        <div class="step-content">
+                            <div class="step-title">✍️ Signature du mandat</div>
+                            <div class="step-description">Autorisation de représentation signée électroniquement</div>
+                            <div class="step-date">✅ Complété le 22/07/2025 à 16:20</div>
+                            <div class="step-action">
+                                <button class="btn btn-secondary" onclick="downloadMandat()">📄 Télécharger le mandat</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon step-completed">✓</div>
+                        <div class="step-content">
+                            <div class="step-title">📤 Dossier envoyé à l'URSSAF</div>
+                            <div class="step-description">Votre demande de création a été transmise officiellement</div>
+                            <div class="step-date">✅ Complété le 23/07/2025 à 09:15</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon step-current">🔍</div>
+                        <div class="step-content">
+                            <div class="step-title">🔍 Dossier en traitement par l'administration</div>
+                            <div class="step-description">L'URSSAF examine votre demande. Cette étape prend généralement 2-3 jours ouvrés</div>
+                            <div class="step-date">🔄 En cours depuis le 23/07/2025</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon step-pending">6</div>
+                        <div class="step-content">
+                            <div class="step-title">🎉 SIREN attribué</div>
+                            <div class="step-description">Votre numéro SIREN sera affiché ici une fois attribué par l'INSEE</div>
+                            <div class="step-date">⏳ En attente</div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-icon step-pending">7</div>
+                        <div class="step-content">
+                            <div class="step-title">📄 Attestation d'inscription disponible</div>
+                            <div class="step-description">Document officiel confirmant votre statut de micro-entrepreneur</div>
+                            <div class="step-date">⏳ En attente du SIREN</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section documents -->
+            <div class="documents-section">
+                <h2 class="section-title">
+                    <span>📎</span>
+                    Envoi et reprise de documents
+                </h2>
+                
+                <div class="document-grid">
+                    <div class="document-card uploaded">
+                        <div class="document-icon">🆔</div>
+                        <div class="document-title">Pièce d'identité</div>
+                        <div class="document-status success">✓ Carte d'identité validée</div>
+                        <p style="font-size: 0.75rem; color: #64748b;">Téléchargé le 22/07/2025</p>
+                    </div>
+
+                    <div class="document-card uploaded">
+                        <div class="document-icon">🏠</div>
+                        <div class="document-title">Justificatif de domicile</div>
+                        <div class="document-status success">✓ Facture EDF validée</div>
+                        <p style="font-size: 0.75rem; color: #64748b;">Téléchargé le 22/07/2025</p>
+                    </div>
+
+                    <div class="document-card uploaded">
+                        <div class="document-icon">✍️</div>
+                        <div class="document-title">Mandat de représentation</div>
+                        <div class="document-status success">✓ Signé électroniquement</div>
+                        <button class="btn btn-secondary" onclick="downloadMandat()">📥 Télécharger</button>
+                    </div>
+
+                    <div class="document-card" onclick="uploadDocument('additional')">
+                        <div class="document-icon">📁</div>
+                        <div class="document-title">Document supplémentaire</div>
+                        <div class="document-status">Optionnel - Cliquez pour ajouter</div>
+                        <div class="upload-area">
+                            <p style="font-size: 0.75rem;">Format accepté: PDF, JPG, PNG (max 5MB)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section messagerie -->
+            <div class="messaging-section">
+                <h2 class="section-title">
+                    <span>💬</span>
+                    Messagerie & Suivi
+                </h2>
+                
+                <div class="message-thread">
+                    <div class="message">
+                        <div class="message-avatar system">FP</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Le bureau des formalités- Équipe Support</span>
+                                <span class="message-time">Aujourd'hui - 14:15</span>
+                            </div>
+                            <div class="message-text">
+                                <strong>Mise à jour:</strong> Nous venons de recevoir un accusé de réception de l'URSSAF. Votre dossier est bien en cours de traitement. Vous recevrez une notification automatique dès l'attribution de votre SIREN. 🎉
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar user">PD</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Pierre Durand</span>
+                                <span class="message-time">Aujourd'hui - 11:30</span>
+                            </div>
+                            <div class="message-text">
+                                Parfait, merci ! J'ai hâte de recevoir mon numéro SIREN pour commencer mon activité e-commerce. Combien de temps cela prend-il généralement ?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="message">
+                        <div class="message-avatar system">FP</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="message-author">Le bureau des formalités- Marie L.</span>
+                                <span class="message-time">23/07/2025 - 09:20</span>
+                            </div>
+                            <div class="message-text">
+                                Bonjour Pierre ! 👋 Votre dossier a été transmis avec succès à l'URSSAF. Le délai de traitement est généralement de 2 à 3 jours ouvrés. Nous vous tiendrons informé en temps réel de l'évolution.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="message-input-container">
+                    <textarea class="message-input" placeholder="Écrivez votre message à notre équipe..." id="messageInput"></textarea>
+                    <button class="btn btn-primary" style="margin-top: 1rem;" onclick="sendMessage()">
+                        <span>📤</span>
+                        Envoyer le message
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section FAQ -->
+            <div class="faq-section">
+                <h2 class="section-title">
+                    <span>❓</span>
+                    Foire aux Questions
+                </h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Quand vais-je recevoir mon SIREN ?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Délai habituel :</strong> 2 à 3 jours ouvrés après transmission du dossier complet à l'URSSAF.<br><br>
+                        <strong>Dans votre cas :</strong> Votre dossier a été transmis le 23/07/2025, vous devriez recevoir votre SIREN avant le 26/07/2025.<br><br>
+                        <strong>Notification :</strong> Vous recevrez un email et SMS automatique dès l'attribution, avec votre numéro SIREN et les prochaines étapes.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Dois-je ouvrir un compte bancaire dédié ?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Obligation légale :</strong> Un compte bancaire dédié n'est obligatoire qu'au-delà de 10 000€ de chiffre d'affaires annuel pendant 2 années consécutives.<br><br>
+                        <strong>Notre recommandation :</strong> Nous conseillons fortement d'ouvrir un compte dédié dès le début pour :<br>
+                        • Simplifier votre comptabilité<br>
+                        • Séparer vos finances personnelles et professionnelles<br>
+                        • Faciliter vos déclarations URSSAF<br><br>
+                        <strong>Banques partenaires :</strong> Nous avons des accords préférentiels avec plusieurs banques en ligne (frais réduits).
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Que faire une fois mon SIREN reçu ?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Étapes immédiates :</strong><br>
+                        1. Télécharger votre attestation d'inscription (disponible ici)<br>
+                        2. Créer votre compte sur urssaf.fr avec votre SIREN<br>
+                        3. Choisir votre périodicité de déclaration (mensuelle ou trimestrielle)<br><br>
+                        <strong>Première déclaration :</strong> Même à 0€ de CA, vous devez déclarer dans les 30 jours suivant la fin de votre première période.<br><br>
+                        <strong>Notre accompagnement :</strong> Nous vous enverrons un guide complet et vous pourrez planifier un appel gratuit avec nos experts.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Puis-je commencer mon activité avant d'avoir le SIREN ?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Réponse légale :</strong> Non, vous ne pouvez pas facturer ou exercer officiellement avant d'avoir reçu votre numéro SIREN.<br><br>
+                        <strong>Ce que vous pouvez faire :</strong><br>
+                        • Préparer vos supports de communication<br>
+                        • Configurer votre site web / boutique en ligne<br>
+                        • Prospecter et prendre des contacts<br>
+                        • Suivre des formations<br><br>
+                        <strong>Attention :</strong> Toute facturation avant l'obtention du SIREN constitue du travail dissimulé (passible d'amende).
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <span>Comment relancer si je n'ai pas de nouvelles ?</span>
+                        <div class="faq-icon">+</div>
+                    </div>
+                    <div class="faq-answer">
+                        <strong>Délais de relance :</strong><br>
+                        • Après 5 jours ouvrés : Relance automatique de notre part<br>
+                        • Après 7 jours ouvrés : Vous pouvez nous contacter<br>
+                        • Après 10 jours ouvrés : Escalade vers l'URSSAF<br><br>
+                        <strong>Comment nous contacter :</strong><br>
+                        • Via cette messagerie (réponse sous 2h en journée)<br>
+                        • Par téléphone : 01 23 45 67 89<br>
+                        • Email urgent : support@formalispro.fr<br><br>
+                        <strong>Bouton d'urgence :</strong> En bas à droite de cette page pour un contact prioritaire.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section téléchargements -->
+            <div class="download-section">
+                <h2 class="section-title">
+                    <span>📥</span>
+                    Documents importants
+                </h2>
+                
+                <div class="download-grid">
+                    <div class="download-card pending">
+                        <div class="download-icon">📜</div>
+                        <div class="download-title">Attestation d'inscription URSSAF</div>
+                        <div class="download-status">🕒 Disponible après attribution du SIREN</div>
+                        <p style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">
+                            Document officiel prouvant votre statut de micro-entrepreneur
+                        </p>
+                    </div>
+
+                    <div class="download-card available" onclick="downloadDocument('mandat')">
+                        <div class="download-icon">✍️</div>
+                        <div class="download-title">Mandat de représentation</div>
+                        <div class="download-status available">✓ Disponible maintenant</div>
+                        <button class="btn btn-primary" style="margin-top: 0.5rem;">📥 Télécharger PDF</button>
+                    </div>
+
+                    <div class="download-card available" onclick="downloadDocument('recap')">
+                        <div class="download-icon">📋</div>
+                        <div class="download-title">Récapitulatif du dossier</div>
+                        <div class="download-status available">✓ Disponible maintenant</div>
+                        <button class="btn btn-primary" style="margin-top: 0.5rem;">📥 Télécharger PDF</button>
+                    </div>
+
+                    <div class="download-card available" onclick="downloadDocument('guide')">
+                        <div class="download-icon">📖</div>
+                        <div class="download-title">Guide du micro-entrepreneur</div>
+                        <div class="download-status available">✓ Guide complet 2025</div>
+                        <button class="btn btn-primary" style="margin-top: 0.5rem;">📥 Télécharger PDF</button>
+                    </div>
+
+                    <div class="download-card pending">
+                        <div class="download-icon">🧾</div>
+                        <div class="download-title">Reçu de paiement</div>
+                        <div class="download-status">🕒 Service gratuit - Aucun paiement</div>
+                        <p style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">
+                            Notre service est entièrement gratuit pour les particuliers
+                        </p>
+                    </div>
+
+                    <div class="download-card pending">
+                        <div class="download-icon">💾</div>
+                        <div class="download-title">Sauvegarde de vos données</div>
+                        <div class="download-status">🕒 Disponible après finalisation</div>
+                        <p style="font-size: 0.75rem; color: #64748b; margin-top: 0.5rem;">
+                            Archive complète de votre dossier au format ZIP
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <div style="font-weight: bold; margin-bottom: 1rem; font-size: 1.125rem;">
+                    🆘 Besoin d'aide ? Notre équipe est là pour vous accompagner
+                </div>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <span>support@formalispro.fr</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>📞</span>
+                        <span>01 23 45 67 89</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>🕒</span>
+                        <span>Lun-Ven 9h-18h</span>
+                    </div>
+                    <div class="contact-item">
+                        <span>💬</span>
+                        <span>Chat en direct</span>
+                    </div>
+                </div>
+
+                <div class="trusted-logos">
+                    <div class="trusted-logo">🏛️ URSSAF</div>
+                    <div class="trusted-logo">📊 INSEE</div>
+                    <div class="trusted-logo">⚖️ INPI</div>
+                    <div class="trusted-logo">🔒 RGPD</div>
+                </div>
+
+                <p style="margin-top: 1rem; font-size: 0.875rem; opacity: 0.8;">
+                    Vos données sont sécurisées et ne sont jamais partagées avec des tiers
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton contact d'urgence -->
+    <div class="urgent-contact" onclick="urgentContact()">
+        <span style="font-size: 1.5rem;">🆘</span>
+    </div>
+
+    <script>
+        // Données du client
+        const clientData = {
+            nom: "Pierre Durand",
+            email: "pierre.durand@gmail.com",
+            activite: "E-commerce",
+            progression: 71,
+            etapeActuelle: 5,
+            totalEtapes: 7,
+            dateCreation: null,
+            siren: null,
+            documents: {
+                identite: { status: 'validated', date: '22/07/2025' },
+                domicile: { status: 'validated', date: '22/07/2025' },
+                mandat: { status: 'signed', date: '22/07/2025' }
+            }
+        };
+
+        // Gestion des FAQ
+        function toggleFaq(element) {
+            const answer = element.nextElementSibling;
+            const icon = element.querySelector('.faq-icon');
+            const isActive = element.classList.contains('active');
+            
+            // Fermer toutes les autres FAQ
+            document.querySelectorAll('.faq-question').forEach(q => {
+                q.classList.remove('active');
+                q.nextElementSibling.classList.remove('active');
+                q.querySelector('.faq-icon').textContent = '+';
+            });
+            
+            if (!isActive) {
+                element.classList.add('active');
+                answer.classList.add('active');
+                icon.textContent = '×';
+            }
+        }
+
+        // Gestion des messages
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value.trim();
+            
+            if (!message) {
+                alert('⚠️ Veuillez saisir un message avant d\'envoyer.');
+                return;
+            }
+            
+            // Simulation d'envoi
+            const messageThread = document.querySelector('.message-thread');
+            const newMessage = document.createElement('div');
+            newMessage.className = 'message';
+            newMessage.innerHTML = `
+                <div class="message-avatar user">PD</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-author">Pierre Durand</span>
+                        <span class="message-time">À l'instant</span>
+                    </div>
+                    <div class="message-text">${message}</div>
+                </div>
+            `;
+            
+            messageThread.appendChild(newMessage);
+            messageInput.value = '';
+            
+            // Réponse automatique simulée
+            setTimeout(() => {
+                const autoResponse = document.createElement('div');
+                autoResponse.className = 'message';
+                autoResponse.innerHTML = `
+                    <div class="message-avatar system">FP</div>
+                    <div class="message-content">
+                        <div class="message-header">
+                            <span class="message-author">Le bureau des formalités- Assistant</span>
+                            <span class="message-time">À l'instant</span>
+                        </div>
+                        <div class="message-text">✅ Message bien reçu ! Notre équipe vous répondra sous 2h en journée. Pour une urgence, utilisez le bouton rouge en bas à droite.</div>
+                    </div>
+                `;
+                messageThread.appendChild(autoResponse);
+                messageThread.scrollTop = messageThread.scrollHeight;
+            }, 1500);
+            
+            alert('📤 Message envoyé !\n\nNotre équipe vous répondra sous 2h en journée.');
+        }
+
+        // Gestion des téléchargements
+        function downloadDocument(type) {
+            const documents = {
+                mandat: {
+                    name: 'Mandat_Pierre_Durand_22072025.pdf',
+                    message: '✍️ MANDAT DE REPRÉSENTATION\n\n📄 Document signé électroniquement\n📅 Signé le 22/07/2025 à 16:20\n💼 Autorisation FormalisPro\n\n✅ Téléchargement simulé !'
+                },
+                recap: {
+                    name: 'Recap_Dossier_Pierre_Durand.pdf',
+                    message: '📋 RÉCAPITULATIF DU DOSSIER\n\n👤 Pierre Durand\n🎯 E-commerce\n📧 pierre.durand@gmail.com\n📅 Demande du 22/07/2025\n\n✅ Téléchargement simulé !'
+                },
+                guide: {
+                    name: 'Guide_Micro_Entrepreneur_2025.pdf',
+                    message: '📖 GUIDE DU MICRO-ENTREPRENEUR 2025\n\n📊 68 pages d\'informations\n💰 Plafonds et cotisations\n📋 Obligations déclaratives\n💡 Conseils pratiques\n\n✅ Téléchargement simulé !'
+                }
+            };
+            
+            const doc = documents[type];
+            if (doc) {
+                alert(doc.message);
+            }
+        }
+
+        function downloadMandat() {
+            downloadDocument('mandat');
+        }
+
+        // Upload de documents
+        function uploadDocument(type) {
+            alert('📎 UPLOAD DE DOCUMENT\n\n📁 Sélectionnez votre fichier :\n\n✅ Formats acceptés : PDF, JPG, PNG\n📏 Taille max : 5MB\n🔒 Transmission sécurisée\n\n(Fonctionnalité simulée)');
+        }
+
+        // Contact d'urgence
+        function urgentContact() {
+            const urgentMessage = `
+🆘 CONTACT D'URGENCE ACTIVÉ
+
+Vous allez être mis en relation avec notre équipe prioritaire.
+
+📞 Appel direct : 01 23 45 67 89
+📧 Email urgent : urgent@formalispro.fr
+💬 Chat prioritaire : Ouverture automatique
+
+⏰ Délai de réponse garanti : 30 minutes
+🕒 Disponible 7j/7 de 9h à 18h
+
+Motifs d'urgence acceptés :
+• Délai dépassé (>7 jours)
+• Document refusé
+• Erreur dans le dossier
+• Question bloquante
+
+✅ Votre demande d'assistance prioritaire a été enregistrée.
+            `;
+            
+            alert(urgentMessage);
+        }
+
+        // Notifications automatiques (simulation)
+        function simulateNotifications() {
+            // Simulation d'une notification après 10 secondes
+            setTimeout(() => {
+                if (confirm('🔔 NOTIFICATION\n\nMise à jour de votre dossier !\n\nL\'URSSAF a confirmé la réception de votre demande. Le traitement est en cours.\n\nCliquez OK pour voir les détails.')) {
+                    alert('📋 DÉTAILS DE LA NOTIFICATION\n\n🕒 Reçu à 15:42\n📤 Expéditeur : URSSAF Île-de-France\n📊 Statut : En cours de traitement\n⏱️ Délai estimé : 24-48h\n\n✅ Vous recevrez une nouvelle notification dès l\'attribution de votre SIREN.');
+                }
+            }, 10000);
+        }
+
+        // Animation de la barre de progression au chargement
+        function initProgressBar() {
+            const progressFill = document.querySelector('.progress-fill');
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.width = '71%';
+            }, 1000);
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            initProgressBar();
+            simulateNotifications();
+            
+            // Animation des étapes
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                step.style.opacity = '0';
+                step.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    step.style.transition = 'all 0.5s ease';
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // Gestion automatique du scroll pour les messages
+        document.querySelector('.message-thread').scrollTop = document.querySelector('.message-thread').scrollHeight;
+    </script>
+</body>
+</html>
