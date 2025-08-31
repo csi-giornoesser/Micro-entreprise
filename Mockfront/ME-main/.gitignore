@@ -1,0 +1,6 @@
+# Ignore tous les .env dans tous les sous-dossiers
+**/.env
+**/.env.*
+# …sauf les fichiers d'exemple (qu'on DOIT committer)
+!**/.env.example
+node_modules
