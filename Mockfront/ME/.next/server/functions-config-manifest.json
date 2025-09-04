@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/alerts": {},
+    "/api/dashboard": {},
+    "/api/entreprises/[id]": {}
+  }
+}

@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ./crm-backend
+      dockerfile: Dockerfile
+    container_name: crm-backend
+    ports:
+      - "8000:8000"
+    environment:
+      NODE_ENV: production
+      PORT: 8000
+      # Option utile pour Puppeteer (image déjà fournie avec Chromium)
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+      PUPPETEER_SKIP_DOWNLOAD: "true"
+    env_file:
+      - ./env/backend.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks:
+      - appnet
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: crm-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      # Très important: le front parle au back via le réseau compose
+      API_INTERNAL_URL: http://backend:8000
+      NEXT_TELEMETRY_DISABLED: "1"
+    env_file:
+      - ./env/frontend.env
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+    networks:
+      - appnet
+
+networks:
+  appnet:
+    driver: bridge

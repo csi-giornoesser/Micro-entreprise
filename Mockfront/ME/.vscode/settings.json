@@ -1,0 +1,5 @@
+{
+  // <-- Forcer l'usage de la TS locale du projet
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

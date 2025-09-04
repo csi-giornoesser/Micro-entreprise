@@ -1,0 +1,11 @@
+node_modules
+.next
+crm-backend
+.git
+.gitignore
+Dockerfile
+Dockerfile.frontend
+docker-compose.yml
+env
+.vscode
+*.log
